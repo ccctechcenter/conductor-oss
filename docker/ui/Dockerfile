@@ -34,6 +34,7 @@ RUN chmod +x /app/startup.sh
 
 # Get and install conductor UI
 RUN cd /app/ui \
+  && npm install natives@1.1.6 \
   && npm install \
   && npm run build --server
 
