@@ -130,7 +130,7 @@ public class CcctcHttpTask extends HttpTask {
     }
     
     @Override
-    public void start(Workflow workflow, Task task, WorkflowExecutor executor) throws Exception {
+    public void start(Workflow workflow, Task task, WorkflowExecutor executor) {
         Object request = task.getInputData().get(requestParameter);
         task.setWorkerId(config.getServerId());
         if(request == null) {
