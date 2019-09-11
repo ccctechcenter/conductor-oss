@@ -122,7 +122,7 @@ public class ExecutionService {
 			throw new ApplicationException(ApplicationException.Code.INVALID_INPUT,
 					"Long Poll Timeout value cannot be more than 5 seconds");
 		}
-		String queueName = QueueUtils.getQueueName(taskType, domain);
+		String queueName = QueueUtils.getQueueName(taskType, domain, null,null);
 
 		List<Task> tasks = new LinkedList<>();
 		try {
@@ -130,6 +130,9 @@ public class ExecutionService {
 			for (String taskId : taskIds) {
 				Task task = getTask(taskId);
 				if (task == null) {
+					// Remove taskId(s) without a valid Task from the queue.
+					queueDAO.remove(queueName, taskId);
+					logger.info("Removed taskId without a valid task from queue: {}, {}", queueName, taskId);
 					continue;
 				}
 
@@ -186,6 +189,10 @@ public class ExecutionService {
 		});
 		return allPollData;
 
+	}
+
+	public void terminateWorkflow(String workflowId, String reason) {
+		workflowExecutor.terminateWorkflow(workflowId, reason);
 	}
 
 	//For backward compatibility - to be removed in the later versions
@@ -270,7 +277,7 @@ public class ExecutionService {
 				if (callback < 0) {
 					callback = 0;
 				}
-				boolean pushed = queueDAO.pushIfNotExists(QueueUtils.getQueueName(pending), pending.getTaskId(), callback);
+				boolean pushed = queueDAO.pushIfNotExists(QueueUtils.getQueueName(pending), pending.getTaskId(), workflow.getPriority(), callback);
 				if (pushed) {
 					count++;
 				}
@@ -314,7 +321,7 @@ public class ExecutionService {
 		if(callback < 0) {
 			callback = 0;
 		}
-		return queueDAO.pushIfNotExists(QueueUtils.getQueueName(pending), pending.getTaskId(), callback);
+		return queueDAO.pushIfNotExists(QueueUtils.getQueueName(pending), pending.getTaskId(), pending.getWorkflowPriority(), callback);
 	}
 
 	public List<Workflow> getWorkflowInstances(String workflowName, String correlationId, boolean includeClosed, boolean includeTasks) {

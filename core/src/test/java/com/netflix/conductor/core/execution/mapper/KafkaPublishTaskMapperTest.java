@@ -72,7 +72,7 @@ public class KafkaPublishTaskMapperTest {
 	}
 
 	@Test
-	public void taskDefNotGiven_ExceptionExpected() {
+	public void getMappedTasks_WithoutTaskDef() {
 		//Given
 		WorkflowTask taskToSchedule = new WorkflowTask();
 		taskToSchedule.setName("kafka_task");
@@ -84,9 +84,15 @@ public class KafkaPublishTaskMapperTest {
 		WorkflowDef workflowDef = new WorkflowDef();
 		workflow.setWorkflowDefinition(workflowDef);
 
+		TaskDef taskdefinition = new TaskDef();
+		String testExecutionNameSpace = "testExecutionNameSpace";
+		taskdefinition.setExecutionNameSpace(testExecutionNameSpace);
+		String testIsolationGroupId = "testIsolationGroupId";
+		taskdefinition.setIsolationGroupId(testIsolationGroupId);
 		TaskMapperContext taskMapperContext = TaskMapperContext.newBuilder()
 				.withWorkflowDefinition(workflowDef)
 				.withWorkflowInstance(workflow)
+				.withTaskDefinition(taskdefinition)
 				.withTaskToSchedule(taskToSchedule)
 				.withTaskInput(new HashMap<>())
 				.withRetryCount(0)
@@ -94,10 +100,13 @@ public class KafkaPublishTaskMapperTest {
 				.withTaskId(taskId)
 				.build();
 
-		//then
-		expectedException.expect(TerminateWorkflowException.class);
-		expectedException.expectMessage(String.format("Invalid task specified. Cannot find task by name %s in the task definitions", taskToSchedule.getName()));
 		//when
-		kafkaTaskMapper.getMappedTasks(taskMapperContext);
+		List<Task> mappedTasks = kafkaTaskMapper.getMappedTasks(taskMapperContext);
+
+		//Then
+		assertEquals(1, mappedTasks.size());
+		assertEquals(TaskType.KAFKA_PUBLISH.name(), mappedTasks.get(0).getTaskType());
+		assertEquals(testExecutionNameSpace, mappedTasks.get(0).getExecutionNameSpace());
+		assertEquals(testIsolationGroupId, mappedTasks.get(0).getIsolationGroupId());
 	}
 }
