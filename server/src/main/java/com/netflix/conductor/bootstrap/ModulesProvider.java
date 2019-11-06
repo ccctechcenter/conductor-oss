@@ -130,7 +130,6 @@ public class ModulesProvider implements Provider<List<AbstractModule>> {
 
         new HttpTask(new RestClientManager(configuration), configuration);
         new KafkaPublishTask(configuration, new KafkaProducerManager(configuration));
-        new CcctcHttpTask(new RestClientManager(configuration), configuration);
         new JsonJqTransform();
         modules.add(new ServerModule());
 
