@@ -14,12 +14,14 @@ package com.netflix.conductor.jedis;
 
 import com.netflix.dyno.connectionpool.Host;
 import com.netflix.dyno.connectionpool.HostSupplier;
-import java.util.ArrayList;
+import redis.clients.jedis.JedisShardInfo;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.commands.JedisCommands;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.commands.JedisCommands;
+
+import java.util.Collections;
 
 public class RedisClusterJedisProvider implements Provider<JedisCommands> {
 
@@ -32,13 +34,7 @@ public class RedisClusterJedisProvider implements Provider<JedisCommands> {
 
     @Override
     public JedisCommands get() {
-        // FIXME This doesn't seem very safe, but is how it was in the code this was moved from.
-        Host host = new ArrayList<>(hostSupplier.getHosts()).get(0);
-        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
-        poolConfig.setMinIdle(5);
-        poolConfig.setMaxTotal(1000);
-
-        JedisPool jedisPool = new JedisPool(poolConfig, host.getHostName(), host.getPort());
-        return new JedisCluster(jedisPool);
+        Host host = hostSupplier.getHosts().get(0);
+        return new ShardedJedis(Collections.singletonList(new JedisShardInfo(host.getHostAddress())));
     }
 }
