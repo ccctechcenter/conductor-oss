@@ -28,11 +28,7 @@ import com.netflix.conductor.common.run.Workflow;
 import com.netflix.conductor.common.utils.EnvUtils;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import com.netflix.conductor.common.utils.JsonMapperProvider;
@@ -88,6 +84,7 @@ public class ParametersUtils {
         workflowParams.put("correlationId", workflow.getCorrelationId());
         workflowParams.put("reasonForIncompletion", workflow.getReasonForIncompletion());
         workflowParams.put("schemaVersion", workflow.getSchemaVersion());
+        workflowParams.put("variables", workflow.getVariables());
 
         inputMap.put("workflow", workflowParams);
 
@@ -161,23 +158,23 @@ public class ParametersUtils {
 
     @SuppressWarnings("unchecked")
     private Map<String, Object> replace(Map<String, Object> input, DocumentContext documentContext, String taskId) {
+        Map<String, Object> result = new HashMap<>();
         for (Entry<String, Object> e : input.entrySet()) {
+            Object newValue;
             Object value = e.getValue();
             if (value instanceof String) {
-                Object replaced = replaceVariables(value.toString(), documentContext, taskId);
-                e.setValue(replaced);
+                newValue = replaceVariables(value.toString(), documentContext, taskId);
             } else if (value instanceof Map) {
                 //recursive call
-                Object replaced = replace((Map<String, Object>) value, documentContext, taskId);
-                e.setValue(replaced);
+                newValue = replace((Map<String, Object>) value, documentContext, taskId);
             } else if (value instanceof List) {
-                Object replaced = replaceList((List<?>) value, taskId, documentContext);
-                e.setValue(replaced);
+                newValue = replaceList((List<?>) value, taskId, documentContext);
             } else {
-                e.setValue(value);
+                newValue = value;
             }
+            result.put(e.getKey(), newValue);
         }
-        return input;
+        return result;
     }
 
     @SuppressWarnings("unchecked")
@@ -201,11 +198,11 @@ public class ParametersUtils {
     }
 
     private Object replaceVariables(String paramString, DocumentContext documentContext, String taskId) {
-        String[] values = paramString.split("(?=\\$\\{)|(?<=\\})");
+        String[] values = paramString.split("(?=(?<!\\$)\\$\\{)|(?<=\\})");
         Object[] convertedValues = new Object[values.length];
         for (int i = 0; i < values.length; i++) {
             convertedValues[i] = values[i];
-            if (values !=null && values[i].startsWith("${") && values[i].endsWith("}")) {
+            if (values[i].startsWith("${") && values[i].endsWith("}")) {
                 String paramPath = values[i].substring(2, values[i].length() - 1);
                 if (EnvUtils.isEnvironmentVariable(paramPath)) {
                     String sysValue = EnvUtils.getSystemParametersValue(paramPath, taskId);
@@ -221,7 +218,8 @@ public class ParametersUtils {
                         convertedValues[i] = null;
                     }
                 }
-
+            } else if (values[i].contains("$${")) {
+                convertedValues[i] = values[i].replaceAll("\\$\\$\\{", "\\${");
             }
         }
 
