@@ -1,5 +1,5 @@
-/**
- * Copyright 2017 Netflix, Inc.
+/*
+ * Copyright 2020 Netflix, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,9 +12,16 @@
  */
 package com.netflix.conductor.elasticsearch.es5;
 
+import static java.util.Collections.singletonList;
+
 import com.netflix.conductor.elasticsearch.ElasticSearchConfiguration;
 import com.netflix.conductor.elasticsearch.EmbeddedElasticSearch;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Collection;
 
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.InternalSettingsPreparer;
 import org.elasticsearch.node.Node;
@@ -22,13 +29,6 @@ import org.elasticsearch.plugins.Plugin;
 import org.elasticsearch.transport.Netty4Plugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Collection;
-
-import static java.util.Collections.singletonList;
 
 
 public class EmbeddedElasticSearchV5 implements EmbeddedElasticSearch {
@@ -125,5 +125,13 @@ public class EmbeddedElasticSearchV5 implements EmbeddedElasticSearch {
             logger.info("Elastic Search on port {} stopped", port);
         }
 
+    }
+    @Override
+    public void waitForGreenCluster() {
+        long startTime = System.currentTimeMillis();
+        ClusterHealthRequest healthRequest = new ClusterHealthRequest();
+        healthRequest.waitForGreenStatus().timeout("30s");
+        instance.client().admin().cluster().health(healthRequest);
+        logger.info("Elasticsearch Cluster ready in {} ms", System.currentTimeMillis() - startTime);
     }
 }
