@@ -26,7 +26,9 @@ import org.springframework.util.StringUtils;
 // Prevents from the datasource beans to be loaded, AS they are needed only for specific databases.
 // In case that SQL database is selected this class will be imported back in the appropriate
 // database persistence module.
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(
+        exclude = DataSourceAutoConfiguration.class,
+        scanBasePackages = {"com.netflix.conductor", "org.ccctech.apigateway.conductor"})
 public class Conductor {
 
     private static final Logger log = LoggerFactory.getLogger(Conductor.class);

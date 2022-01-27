@@ -64,6 +64,9 @@ jar {
 bootJar {
     mainClassName = 'com.netflix.conductor.Conductor'
     classifier = 'boot'
+    manifest{
+        attributes 'Main-Class': 'org.springframework.boot.loader.PropertiesLauncher'
+    }
 }
 
 springBoot {
