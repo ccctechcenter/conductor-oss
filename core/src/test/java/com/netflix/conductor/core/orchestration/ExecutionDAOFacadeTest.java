@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Netflix, Inc.
+ * Copyright 2021 Netflix, Inc.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -11,6 +11,35 @@
  * specific language governing permissions and limitations under the License.
  */
 package com.netflix.conductor.core.orchestration;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.io.IOUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.netflix.conductor.common.config.TestObjectMapperConfiguration;
+import com.netflix.conductor.common.metadata.events.EventExecution;
+import com.netflix.conductor.common.run.SearchResult;
+import com.netflix.conductor.common.run.Workflow;
+import com.netflix.conductor.common.run.Workflow.WorkflowStatus;
+import com.netflix.conductor.core.config.ConductorProperties;
+import com.netflix.conductor.core.execution.TestDeciderService;
+import com.netflix.conductor.dao.ConcurrentExecutionLimitDAO;
+import com.netflix.conductor.dao.ExecutionDAO;
+import com.netflix.conductor.dao.IndexDAO;
+import com.netflix.conductor.dao.PollDataDAO;
+import com.netflix.conductor.dao.QueueDAO;
+import com.netflix.conductor.dao.RateLimitingDAO;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -26,49 +55,38 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.amazonaws.util.IOUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.conductor.common.metadata.events.EventExecution;
-import com.netflix.conductor.common.run.SearchResult;
-import com.netflix.conductor.common.run.Workflow;
-import com.netflix.conductor.common.run.Workflow.WorkflowStatus;
-import com.netflix.conductor.common.utils.JsonMapperProvider;
-import com.netflix.conductor.core.config.Configuration;
-import com.netflix.conductor.core.execution.TestConfiguration;
-import com.netflix.conductor.core.execution.TestDeciderService;
-import com.netflix.conductor.dao.ExecutionDAO;
-import com.netflix.conductor.dao.IndexDAO;
-import com.netflix.conductor.dao.PollDataDAO;
-import com.netflix.conductor.dao.QueueDAO;
-import com.netflix.conductor.dao.RateLimitingDAO;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
-
+@ContextConfiguration(classes = {TestObjectMapperConfiguration.class})
+@RunWith(SpringRunner.class)
 public class ExecutionDAOFacadeTest {
 
     private ExecutionDAO executionDAO;
-    private QueueDAO queueDAO;
     private IndexDAO indexDAO;
-    private ObjectMapper objectMapper;
     private ExecutionDAOFacade executionDAOFacade;
-    private RateLimitingDAO rateLimitingDao;
-    private PollDataDAO pollDataDAO;
+
+    @Autowired private ObjectMapper objectMapper;
 
     @Before
     public void setUp() {
         executionDAO = mock(ExecutionDAO.class);
-        queueDAO = mock(QueueDAO.class);
+        QueueDAO queueDAO = mock(QueueDAO.class);
         indexDAO = mock(IndexDAO.class);
-        rateLimitingDao = mock(RateLimitingDAO.class);
-        pollDataDAO = mock(PollDataDAO.class);
-        objectMapper = new JsonMapperProvider().get();
-        Configuration configuration = new TestConfiguration();
-        executionDAOFacade = new ExecutionDAOFacade(executionDAO, queueDAO, indexDAO, rateLimitingDao, pollDataDAO,
-            objectMapper, configuration);
+        RateLimitingDAO rateLimitingDao = mock(RateLimitingDAO.class);
+        ConcurrentExecutionLimitDAO concurrentExecutionLimitDAO =
+                mock(ConcurrentExecutionLimitDAO.class);
+        PollDataDAO pollDataDAO = mock(PollDataDAO.class);
+        ConductorProperties properties = mock(ConductorProperties.class);
+        when(properties.isEventExecutionIndexingEnabled()).thenReturn(true);
+        when(properties.isAsyncIndexingEnabled()).thenReturn(true);
+        executionDAOFacade =
+                new ExecutionDAOFacade(
+                        executionDAO,
+                        queueDAO,
+                        indexDAO,
+                        rateLimitingDao,
+                        concurrentExecutionLimitDAO,
+                        pollDataDAO,
+                        objectMapper,
+                        properties);
     }
 
     @Test
@@ -91,20 +109,27 @@ public class ExecutionDAOFacadeTest {
     @Test
     public void testGetWorkflowsByCorrelationId() {
         when(executionDAO.canSearchAcrossWorkflows()).thenReturn(true);
-        when(executionDAO.getWorkflowsByCorrelationId(any(), any(), anyBoolean())).thenReturn(Collections.singletonList(new Workflow()));
-        List<Workflow> workflows = executionDAOFacade.getWorkflowsByCorrelationId("workflowName", "correlationId", true);
+        when(executionDAO.getWorkflowsByCorrelationId(any(), any(), anyBoolean()))
+                .thenReturn(Collections.singletonList(new Workflow()));
+        List<Workflow> workflows =
+                executionDAOFacade.getWorkflowsByCorrelationId(
+                        "workflowName", "correlationId", true);
         assertNotNull(workflows);
         assertEquals(1, workflows.size());
-        verify(indexDAO, never()).searchWorkflows(anyString(), anyString(), anyInt(), anyInt(), any());
+        verify(indexDAO, never())
+                .searchWorkflows(anyString(), anyString(), anyInt(), anyInt(), any());
 
         when(executionDAO.canSearchAcrossWorkflows()).thenReturn(false);
         List<String> workflowIds = new ArrayList<>();
         workflowIds.add("workflowId");
         SearchResult<String> searchResult = new SearchResult<>();
         searchResult.setResults(workflowIds);
-        when(indexDAO.searchWorkflows(anyString(), anyString(), anyInt(), anyInt(), any())).thenReturn(searchResult);
+        when(indexDAO.searchWorkflows(anyString(), anyString(), anyInt(), anyInt(), any()))
+                .thenReturn(searchResult);
         when(executionDAO.getWorkflow("workflowId", true)).thenReturn(new Workflow());
-        workflows = executionDAOFacade.getWorkflowsByCorrelationId("workflowName", "correlationId", true);
+        workflows =
+                executionDAOFacade.getWorkflowsByCorrelationId(
+                        "workflowName", "correlationId", true);
         assertNotNull(workflows);
         assertEquals(1, workflows.size());
     }

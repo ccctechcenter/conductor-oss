@@ -31,8 +31,8 @@ Workflows are defined using a JSON based DSL.
   "failureWorkflow": "cleanup_encode_resources",
   "restartable": true,
   "workflowStatusListenerEnabled": true,
-  "schemaVersion": 2,
-  "ownerEmail": "encode_admin@test.com"
+  "schemaVersion": 2, 
+  "ownerEmail": "foo@bar.com"
 }
 ```
 
@@ -43,19 +43,12 @@ Workflows are defined using a JSON based DSL.
 |version|Numeric field used to identify the version of the schema.  Use incrementing numbers|When starting a workflow execution, if not specified, the definition with highest version is used|
 |tasks|An array of task definitions as described below.||
 |inputParameters|List of input parameters. Used for documenting the required inputs to workflow|optional|
+|inputTemplate|Default input values. See [Using inputTemplate](#using-inputtemplate)|optional|
 |outputParameters|JSON template used to generate the output of the workflow|If not specified, the output is defined as the output of the _last_ executed task|
 |failureWorkflow|String; Workflow to be run on current Workflow failure. Useful for cleanup or post actions on failure.|optional|
 |schemaVersion|Current Conductor Schema version. schemaVersion 1 is discontinued.|Must be 2|
 |restartable|Boolean flag to allow Workflow restarts|defaults to true|
 |workflowStatusListenerEnabled|If true, every workflow that gets terminated or completed will send a notification. See [below](#workflow-notifications)|optional (false by default)|
-|ownerEmail|A String that contains the workflow owner's email.|mandatory unless disabled|
-|timeoutSeconds|Time in seconds, after which the workflow is timed out|No timeouts if set to 0 (defaults to 0)|
-|timeoutPolicy|Workflow's timeout policy|see possible values below (defaults to ALERT_ONLY)|
-
-### Timeout Policy
-
-* TIME_OUT_WF : Workflow is marked as TIMED_OUT and terminated.
-* ALERT_ONLY : The timeout is logged but the workflow is not terminated.
 
 ### Tasks within Workflow
 ```tasks``` property in a workflow execution defines an array of tasks to be executed in that order.
@@ -167,6 +160,19 @@ When scheduling the task, Conductor will merge the values from workflow input an
   }
 }
 ```
+
+#### Using inputTemplate
+
+* `inputTemplate` allows to define default values, which can be overridden by values provided in Workflow.
+* Eg: In your Workflow Definition, you can define your inputTemplate as:
+
+```json
+"inputTemplate": {
+    "url": "https://some_url:7004"
+}
+```
+
+And `url` would be `https://some_url:7004 if no `url` was provided as input to your workflow.
 
 ### Workflow notifications
 

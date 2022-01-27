@@ -21,11 +21,12 @@ Conductor maintains a registry of worker tasks.  A task MUST be registered befor
   "timeoutPolicy": "TIME_OUT_WF",
   "retryLogic": "FIXED",
   "retryDelaySeconds": 600,
-  "responseTimeoutSeconds": 3600,
+  "responseTimeoutSeconds": 1200,
   "concurrentExecLimit": 100,
   "rateLimitFrequencyInSeconds": 60,
   "rateLimitPerFrequency": 50,
-  "ownerEmail": "encode_admin@test.com"
+  "ownerEmail": "foo@bar.com",
+  "description": "Sample Encoding task"
 }
 ```
 
@@ -45,9 +46,7 @@ Conductor maintains a registry of worker tasks.  A task MUST be registered befor
 |inputTemplate|See [Using inputTemplate](#using-inputtemplate) below.|optional|
 |concurrentExecLimit|Number of tasks that can be executed at any given time.|optional|
 |rateLimitFrequencyInSeconds, rateLimitPerFrequency|See [Task Rate limits](#task-rate-limits) below.|optional|
-|ownerEmail|A String that contains the task owner's email.|mandatory unless disabled|
-|isolationGroupId|See [Isolation Groups](isolationgroups.md#Isolation-Group-Id).|optional|
-|executionNameSpace|See [Execution Name Space](isolationgroups.md#Execution-Name-Space).|optional|
+
 
 ### Retry Logic
 

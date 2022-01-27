@@ -4,7 +4,7 @@
 
 1. **Database**: [Dynomite](https://github.com/Netflix/dynomite)
 2. **Indexing Backend**: [Elasticsearch 5.x](https://www.elastic.co)
-2. **Servlet Container**: Tomcat, Jetty, or similar running JDK 1.8 or higher
+3. **Servlet Container**: Tomcat, Jetty, or similar running JDK 1.8 or higher
 
 There are 3 ways in which you can install Conductor:
 
@@ -33,11 +33,16 @@ docker-compose build
 ```
 
 After the docker images are built, run the following command to start the containers:
-```shell
-docker-compose up
-```
+- Using compose (with Dynomite):
+  ```shell
+  docker-compose -f docker-compose.yaml -f docker-compose-dynomite.yaml up
+  ```
+- Using compose (with Postgres):
+  ```shell
+  docker-compose -f docker-compose.yaml -f docker-compose-postgres.yaml up
+  ```
 
-This will create a docker container network that consists of the following images: conductor:server, conductor:ui, [elasticsearch:5.6.8](https://hub.docker.com/_/elasticsearch/), and dynomite.
+This will create a docker container network that consists of the following images: conductor:server, conductor:ui, [elasticsearch:5.6.8](https://hub.docker.com/_/elasticsearch/), and dynomite or postgres.
 
 To view the UI, navigate to [localhost:5000](http://localhost:5000/), to view the Swagger docs, navigate to [localhost:8080](http://localhost:8080/).
 
@@ -60,7 +65,7 @@ log4j.properties file path is optional and allows finer control over the logging
 # redis_cluster: AWS Elasticache Redis (cluster mode enabled).See [http://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/Clusters.Create.CON.RedisCluster.html]
 # redis_sentinel: Redis HA with Redis Sentinel. See [https://redis.io/topics/sentinel]
 # dynomite : Dynomite cluster.  Use this for HA configuration.
-db=dynomite
+conductor.db.type=dynomite
 
 # Dynomite Cluster details.
 # format is host:port:rack separated by semicolon
@@ -114,7 +119,7 @@ Clients connects to the server via HTTP load balancer or using Discovery (on Net
 Conductor server can be used with a standlone Redis or ElastiCache server.  To configure the server, change the config to use the following:
 
 ```properties
-db=redis
+conductor.db.type=redis
 
 # For AWS Elasticache Redis (cluster mode enabled) the format is configuration_endpoint:port:us-east-1e.
 # The region in this case does not matter
@@ -130,7 +135,7 @@ See [Technical Details](../technicaldetails/#maintaining-workflow-consistency-wi
 
 Locking Service is disabled by default. Enable this by setting:
 
-```decider.locking.enabled: true```
+```conductor.app.workflowExecutionLockEnabled: true```
 
 Setup Zookeeper cluster connection string:
 

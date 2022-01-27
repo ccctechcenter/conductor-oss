@@ -18,18 +18,27 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.netflix.conductor.common.metadata.tasks.Task;
+import com.netflix.conductor.common.metadata.tasks.TaskType;
 import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.common.run.Workflow;
-import com.netflix.conductor.core.execution.TerminateWorkflowException;
+import com.netflix.conductor.core.exception.TerminateWorkflowException;
 
+@Component
 public class SetVariableTaskMapper implements TaskMapper {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(SetVariableTaskMapper.class);
 
     @Override
-    public List<Task> getMappedTasks(TaskMapperContext taskMapperContext) throws TerminateWorkflowException {
+    public TaskType getTaskType() {
+        return TaskType.SET_VARIABLE;
+    }
+
+    @Override
+    public List<Task> getMappedTasks(TaskMapperContext taskMapperContext)
+            throws TerminateWorkflowException {
         LOGGER.debug("TaskMapperContext {} in SetVariableMapper", taskMapperContext);
 
         WorkflowTask taskToSchedule = taskMapperContext.getTaskToSchedule();
