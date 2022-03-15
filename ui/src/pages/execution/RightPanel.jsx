@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Tabs, Tab, Paper, ReactJson, Dropdown } from "../../components";
+import {
+  Tabs,
+  Tab,
+  Paper,
+  ReactJson,
+  Dropdown,
+  Banner,
+} from "../../components";
 
 import TaskSummary from "./TaskSummary";
 import TaskLogs from "./TaskLogs";
@@ -8,7 +15,7 @@ import { makeStyles } from "@material-ui/styles";
 import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
-  json: {
+  margin: {
     margin: 15,
   },
   dfSelect: {
@@ -117,29 +124,38 @@ export default function RightPanel({
         {tabIndex === 0 && <TaskSummary taskResult={taskResult} />}
         {tabIndex === 1 && (
           <ReactJson
-            className={classes.json}
+            className={classes.margin}
             src={taskResult.inputData}
             title="Task Input"
           />
         )}
         {tabIndex === 2 && (
-          <ReactJson
-            className={classes.json}
-            src={taskResult.outputData}
-            title="Task Output"
-          />
+          <>
+            {taskResult.externalOutputPayloadStoragePath && (
+              <Banner className={classes.margin}>
+                This task has externalized output. Please reference{" "}
+                <code>externalOutputPayloadStoragePath</code> for the storage
+                location.
+              </Banner>
+            )}
+            <ReactJson
+              className={classes.margin}
+              src={taskResult.outputData}
+              title="Task Output"
+            />
+          </>
         )}
         {tabIndex === 3 && <TaskLogs task={taskResult} />}
         {tabIndex === 4 && (
           <ReactJson
-            className={classes.json}
+            className={classes.margin}
             src={taskResult}
             title="Task Execution JSON"
           />
         )}
         {tabIndex === 5 && (
           <ReactJson
-            className={classes.json}
+            className={classes.margin}
             src={taskResult.workflowTask}
             title="Task Definition/Runtime Config"
           />
