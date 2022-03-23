@@ -14,9 +14,6 @@
         "com.netflix.conductor:conductor-core": {
             "project": true
         },
-        "com.netflix.conductor:conductor-es6-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-es7-persistence": {
             "project": true
         },
@@ -110,6 +107,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -119,6 +117,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -134,7 +133,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -168,7 +167,7 @@
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -186,7 +185,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-external-storage",
@@ -195,9 +194,6 @@
                 "com.netflix.conductor:conductor-redis-persistence",
                 "com.netflix.conductor:conductor-rest"
             ],
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es6-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-es7-persistence": {
@@ -281,7 +277,7 @@
         "commons-io:commons-io": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence"
+                "com.netflix.conductor:conductor-es7-persistence"
             ],
             "locked": "2.7"
         },
@@ -386,7 +382,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence",
@@ -407,7 +403,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -426,7 +422,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -445,7 +441,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -464,7 +460,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -483,7 +479,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -497,19 +493,13 @@
         },
         "org.elasticsearch.client:elasticsearch-rest-client": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es6-persistence"
+                "com.netflix.conductor:conductor-es7-persistence"
             ],
             "locked": "7.6.2"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es6-persistence"
-            ],
-            "locked": "7.6.2"
-        },
-        "org.elasticsearch.client:transport": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es6-persistence"
+                "com.netflix.conductor:conductor-es7-persistence"
             ],
             "locked": "7.6.2"
         },
@@ -615,6 +605,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -624,6 +615,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -639,7 +631,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -673,7 +665,7 @@
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -691,7 +683,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-external-storage",
@@ -700,9 +692,6 @@
                 "com.netflix.conductor:conductor-redis-persistence",
                 "com.netflix.conductor:conductor-rest"
             ],
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es6-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-es7-persistence": {
@@ -786,7 +775,7 @@
         "commons-io:commons-io": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence"
+                "com.netflix.conductor:conductor-es7-persistence"
             ],
             "locked": "2.7"
         },
@@ -891,7 +880,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence",
@@ -912,7 +901,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -931,7 +920,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -950,7 +939,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -969,7 +958,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -988,7 +977,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -1002,19 +991,13 @@
         },
         "org.elasticsearch.client:elasticsearch-rest-client": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es6-persistence"
+                "com.netflix.conductor:conductor-es7-persistence"
             ],
             "locked": "7.6.2"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es6-persistence"
-            ],
-            "locked": "7.6.2"
-        },
-        "org.elasticsearch.client:transport": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es6-persistence"
+                "com.netflix.conductor:conductor-es7-persistence"
             ],
             "locked": "7.6.2"
         },
@@ -1105,9 +1088,6 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es6-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-es7-persistence": {
@@ -1215,6 +1195,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -1224,6 +1205,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -1239,7 +1221,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -1273,7 +1255,7 @@
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -1291,7 +1273,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-external-storage",
@@ -1300,9 +1282,6 @@
                 "com.netflix.conductor:conductor-redis-persistence",
                 "com.netflix.conductor:conductor-rest"
             ],
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es6-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-es7-persistence": {
@@ -1386,7 +1365,7 @@
         "commons-io:commons-io": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence"
+                "com.netflix.conductor:conductor-es7-persistence"
             ],
             "locked": "2.7"
         },
@@ -1494,7 +1473,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence",
@@ -1515,7 +1494,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -1534,7 +1513,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -1553,7 +1532,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -1572,7 +1551,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -1591,7 +1570,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-es6-persistence",
+                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-mysql-persistence",
@@ -1605,19 +1584,13 @@
         },
         "org.elasticsearch.client:elasticsearch-rest-client": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es6-persistence"
+                "com.netflix.conductor:conductor-es7-persistence"
             ],
             "locked": "7.6.2"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es6-persistence"
-            ],
-            "locked": "7.6.2"
-        },
-        "org.elasticsearch.client:transport": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es6-persistence"
+                "com.netflix.conductor:conductor-es7-persistence"
             ],
             "locked": "7.6.2"
         },
