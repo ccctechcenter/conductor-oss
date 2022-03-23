@@ -36,13 +36,13 @@
             "locked": "2.17.1"
         },
         "org.elasticsearch.client:elasticsearch-rest-client": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.elasticsearch.client:transport": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.springframework.boot:spring-boot-starter": {
             "locked": "2.3.12.RELEASE"
@@ -200,13 +200,13 @@
             "locked": "2.17.1"
         },
         "org.elasticsearch.client:elasticsearch-rest-client": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.elasticsearch.client:transport": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         }
     },
     "testCompileClasspath": {
@@ -244,13 +244,13 @@
             "locked": "3.1.6"
         },
         "org.elasticsearch.client:elasticsearch-rest-client": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.elasticsearch.client:transport": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.springframework.boot:spring-boot-starter-log4j2": {
             "locked": "2.3.12.RELEASE"
@@ -417,13 +417,13 @@
             "locked": "3.1.6"
         },
         "org.elasticsearch.client:elasticsearch-rest-client": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.elasticsearch.client:transport": {
-            "locked": "6.8.12"
+            "locked": "7.6.2"
         },
         "org.springframework.boot:spring-boot-starter-log4j2": {
             "locked": "2.3.12.RELEASE"

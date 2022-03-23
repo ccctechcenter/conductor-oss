@@ -170,7 +170,7 @@
     },
     "spotbugs": {
         "com.github.spotbugs:spotbugs": {
-            "locked": "4.2.1"
+            "locked": "4.4.1"
         }
     },
     "spotbugsSlf4j": {
