@@ -41,7 +41,9 @@
           }
         },
         "status": {
-          "type": "keyword",
+          "type": "text",
+          "analyzer": "keyword",
+          "search_analyzer": "keyword",
           "index": true
         }
       }
