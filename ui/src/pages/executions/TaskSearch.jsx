@@ -81,7 +81,7 @@ export default function TaskSearchPanel() {
       clauses.push(`taskId="${taskId}"`);
     }
     if (!_.isEmpty(tasks)) {
-      clauses.push(`taskType IN (${tasks.join(",")})`);
+      clauses.push(`taskDefName IN (${tasks.join(",")})`);
     }
     if (!_.isEmpty(lookback)) {
       clauses.push(`startTime>${new Date().getTime() - lookback * MS_IN_DAY}`);
