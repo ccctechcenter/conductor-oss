@@ -38,10 +38,9 @@
         "doc_values": true
       },
       "status": {
-        "type": "text",
-        "analyzer": "keyword",
-        "search_analyzer": "keyword",
-        "index": true
+        "type": "keyword",
+        "index": true,
+        "doc_values": true
       },
       "updateTime": {
         "type": "date",
@@ -58,10 +57,9 @@
         "doc_values": true
       },
       "workflowType": {
-        "type": "text",
-        "analyzer": "keyword",
-        "search_analyzer": "keyword",
-        "index": true
+        "type": "keyword",
+        "index": true,
+        "doc_values": true
       },
       "rawJSON": {
         "type": "text",

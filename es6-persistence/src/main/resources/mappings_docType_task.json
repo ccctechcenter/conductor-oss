@@ -36,9 +36,7 @@
         "format": "strict_date_optional_time||epoch_millis"
       },
       "status": {
-        "type": "text",
-        "analyzer": "keyword",
-        "search_analyzer": "keyword",
+        "type": "keyword",
         "index": true
       },
       "taskDefName": {
@@ -62,9 +60,7 @@
         "index": true
       },
       "workflowType": {
-        "type": "text",
-        "analyzer": "keyword",
-        "search_analyzer": "keyword",
+        "type": "keyword",
         "index": true
       }
     }
