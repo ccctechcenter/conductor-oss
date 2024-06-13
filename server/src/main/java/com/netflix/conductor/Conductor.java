@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.diffplug.gradle.spotless;
+package com.netflix.conductor;
 
 import java.io.IOException;
 import java.util.Properties;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,13 +31,11 @@ import org.springframework.core.io.FileSystemResource;
 // In case that SQL database is selected this class will be imported back in the appropriate
 // database persistence module.
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-@ComponentScan(
-		basePackages = {
-				"com.netflix.conductor",
-				"io.orkes.conductor",
-				"org.ccctech.apigateway.conductor"
-		}
-)
+@ComponentScan(basePackages = {
+		"com.netflix.conductor",
+		"io.orkes.conductor",
+		"org.ccctech.apigateway.conductor"
+})
 public class Conductor {
 
 	private static final Logger log = LoggerFactory.getLogger(Conductor.class);
