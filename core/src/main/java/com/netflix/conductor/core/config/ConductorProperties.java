@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Netflix, Inc.
+ * Copyright 2021 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -80,6 +80,9 @@ public class ConductorProperties {
      */
     @DurationUnit(ChronoUnit.SECONDS)
     private Duration taskExecutionPostponeDuration = Duration.ofSeconds(60);
+
+    /** Used to enable/disable the indexing of tasks. */
+    private boolean taskIndexingEnabled = true;
 
     /** Used to enable/disable the indexing of task execution logs. */
     private boolean taskExecLogIndexingEnabled = true;
@@ -331,6 +334,14 @@ public class ConductorProperties {
 
     public void setTaskExecLogIndexingEnabled(boolean taskExecLogIndexingEnabled) {
         this.taskExecLogIndexingEnabled = taskExecLogIndexingEnabled;
+    }
+
+    public boolean isTaskIndexingEnabled() {
+        return taskIndexingEnabled;
+    }
+
+    public void setTaskIndexingEnabled(boolean taskIndexingEnabled) {
+        this.taskIndexingEnabled = taskIndexingEnabled;
     }
 
     public boolean isAsyncIndexingEnabled() {

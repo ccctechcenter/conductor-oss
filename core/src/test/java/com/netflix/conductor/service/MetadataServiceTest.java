@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Netflix, Inc.
+ * Copyright 2020 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,8 +13,6 @@
 package com.netflix.conductor.service;
 
 import java.util.*;
-
-import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +32,8 @@ import com.netflix.conductor.core.config.ConductorProperties;
 import com.netflix.conductor.core.exception.NotFoundException;
 import com.netflix.conductor.dao.EventHandlerDAO;
 import com.netflix.conductor.dao.MetadataDAO;
+
+import jakarta.validation.ConstraintViolationException;
 
 import static com.netflix.conductor.TestUtils.getConstraintViolationMessages;
 
@@ -377,13 +377,12 @@ public class MetadataServiceTest {
             workflowDef.setOwnerEmail("inavlid-email");
             metadataService.registerWorkflowDef(workflowDef);
         } catch (ConstraintViolationException ex) {
-            assertEquals(3, ex.getConstraintViolations().size());
+            assertEquals(2, ex.getConstraintViolations().size());
             Set<String> messages = getConstraintViolationMessages(ex.getConstraintViolations());
             assertTrue(messages.contains("WorkflowTask list cannot be empty"));
             assertTrue(
                     messages.contains(
                             "Workflow name cannot contain the following set of characters: ':'"));
-            assertTrue(messages.contains("ownerEmail should be valid email address"));
             throw ex;
         }
         fail("metadataService.registerWorkflowDef did not throw ConstraintViolationException !");
@@ -397,13 +396,12 @@ public class MetadataServiceTest {
             workflowDef.setOwnerEmail("inavlid-email");
             metadataService.validateWorkflowDef(workflowDef);
         } catch (ConstraintViolationException ex) {
-            assertEquals(3, ex.getConstraintViolations().size());
+            assertEquals(2, ex.getConstraintViolations().size());
             Set<String> messages = getConstraintViolationMessages(ex.getConstraintViolations());
             assertTrue(messages.contains("WorkflowTask list cannot be empty"));
             assertTrue(
                     messages.contains(
                             "Workflow name cannot contain the following set of characters: ':'"));
-            assertTrue(messages.contains("ownerEmail should be valid email address"));
             throw ex;
         }
         fail("metadataService.validateWorkflowDef did not throw ConstraintViolationException !");

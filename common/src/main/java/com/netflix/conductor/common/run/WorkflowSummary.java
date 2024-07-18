@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Netflix, Inc.
+ * Copyright 2020 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -87,6 +87,9 @@ public class WorkflowSummary {
 
     @ProtoField(id = 18)
     private Set<String> failedTaskNames = new HashSet<>();
+
+    @ProtoField(id = 19)
+    private String createdBy;
 
     public WorkflowSummary() {}
 
@@ -346,6 +349,14 @@ public class WorkflowSummary {
         this.priority = priority;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -366,7 +377,8 @@ public class WorkflowSummary {
                 && StringUtils.equals(getEndTime(), that.getEndTime())
                 && getStatus() == that.getStatus()
                 && Objects.equals(getReasonForIncompletion(), that.getReasonForIncompletion())
-                && Objects.equals(getEvent(), that.getEvent());
+                && Objects.equals(getEvent(), that.getEvent())
+                && Objects.equals(getCreatedBy(), that.getCreatedBy());
     }
 
     @Override
@@ -383,6 +395,7 @@ public class WorkflowSummary {
                 getReasonForIncompletion(),
                 getExecutionTime(),
                 getEvent(),
-                getPriority());
+                getPriority(),
+                getCreatedBy());
     }
 }

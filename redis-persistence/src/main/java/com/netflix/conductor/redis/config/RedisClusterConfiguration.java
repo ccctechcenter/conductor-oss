@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Netflix, Inc.
+ * Copyright 2020 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -55,7 +55,18 @@ public class RedisClusterConfiguration extends JedisCommandsConfigurer {
                         .collect(Collectors.toSet());
         String password = getPassword(hostSupplier.getHosts());
 
-        if (password != null) {
+        if (properties.getUsername() != null && password != null) {
+            log.info("Connecting to Redis Cluster with user AUTH");
+            return new JedisCluster(
+                    new redis.clients.jedis.JedisCluster(
+                            hosts,
+                            Protocol.DEFAULT_TIMEOUT,
+                            Protocol.DEFAULT_TIMEOUT,
+                            DEFAULT_MAX_ATTEMPTS,
+                            properties.getUsername(),
+                            password,
+                            genericObjectPoolConfig));
+        } else if (password != null) {
             log.info("Connecting to Redis Cluster with AUTH");
             return new JedisCluster(
                     new redis.clients.jedis.JedisCluster(

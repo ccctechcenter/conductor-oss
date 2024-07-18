@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Netflix, Inc.
+ * Copyright 2022 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,12 +14,12 @@ package com.netflix.conductor.service;
 
 import java.util.List;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
 import org.springframework.validation.annotation.Validated;
 
 import com.netflix.conductor.common.model.BulkResponse;
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Validated
 public interface WorkflowBulkService {
@@ -67,4 +67,23 @@ public interface WorkflowBulkService {
                                     "Cannot process more than {max} workflows. Please use multiple requests.")
                     List<String> workflowIds,
             String reason);
+
+    BulkResponse deleteWorkflow(
+            @NotEmpty(message = "WorkflowIds list cannot be null.")
+                    @Size(
+                            max = MAX_REQUEST_ITEMS,
+                            message =
+                                    "Cannot process more than {max} workflows. Please use multiple requests.")
+                    List<String> workflowIds,
+            boolean archiveWorkflow);
+
+    BulkResponse terminateRemove(
+            @NotEmpty(message = "WorkflowIds list cannot be null.")
+                    @Size(
+                            max = MAX_REQUEST_ITEMS,
+                            message =
+                                    "Cannot process more than {max} workflows. Please use multiple requests.")
+                    List<String> workflowIds,
+            String reason,
+            boolean archiveWorkflow);
 }

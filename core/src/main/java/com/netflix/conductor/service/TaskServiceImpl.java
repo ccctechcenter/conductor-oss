@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Netflix, Inc.
+ * Copyright 2022 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -137,6 +137,27 @@ public class TaskServiceImpl implements TaskService {
                 taskResult,
                 taskResult.getCallbackAfterSeconds());
         return taskResult.getTaskId();
+    }
+
+    @Override
+    public String updateTask(
+            String workflowId,
+            String taskRefName,
+            TaskResult.Status status,
+            String workerId,
+            Map<String, Object> output) {
+        Task pending = getPendingTaskForWorkflow(workflowId, taskRefName);
+        if (pending == null) {
+            return null;
+        }
+
+        TaskResult taskResult = new TaskResult(pending);
+        taskResult.setStatus(status);
+        taskResult.getOutputData().putAll(output);
+        if (StringUtils.isNotBlank(workerId)) {
+            taskResult.setWorkerId(workerId);
+        }
+        return updateTask(taskResult);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Netflix, Inc.
+ * Copyright 2022 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,10 +22,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.script.ScriptException;
-import javax.validation.Constraint;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.Payload;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,6 +30,11 @@ import com.netflix.conductor.common.metadata.tasks.TaskType;
 import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.core.events.ScriptEvaluator;
 import com.netflix.conductor.core.utils.DateTimeUtils;
+
+import jakarta.validation.Constraint;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import jakarta.validation.Payload;
 
 import static com.netflix.conductor.core.execution.tasks.Terminate.getTerminationStatusParameter;
 import static com.netflix.conductor.core.execution.tasks.Terminate.validateInputStatus;
@@ -262,7 +263,7 @@ public @interface WorkflowTaskTypeConstraint {
                 String message =
                         String.format(
                                 PARAM_REQUIRED_STRING_FORMAT,
-                                "loopExpression",
+                                "loopCondition",
                                 TaskType.DO_WHILE,
                                 workflowTask.getName());
                 context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
@@ -272,7 +273,7 @@ public @interface WorkflowTaskTypeConstraint {
                 String message =
                         String.format(
                                 PARAM_REQUIRED_STRING_FORMAT,
-                                "loopover",
+                                "loopOver",
                                 TaskType.DO_WHILE,
                                 workflowTask.getName());
                 context.buildConstraintViolationWithTemplate(message).addConstraintViolation();

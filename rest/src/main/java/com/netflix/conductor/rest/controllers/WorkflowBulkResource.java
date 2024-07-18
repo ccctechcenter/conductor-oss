@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Netflix, Inc.
+ * Copyright 2021 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,6 +14,7 @@ package com.netflix.conductor.rest.controllers;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -110,5 +111,34 @@ public class WorkflowBulkResource {
             @RequestBody List<String> workflowIds,
             @RequestParam(value = "reason", required = false) String reason) {
         return workflowBulkService.terminate(workflowIds, reason);
+    }
+
+    /**
+     * Delete the list of workflows.
+     *
+     * @param workflowIds - list of workflow Ids to be deleted
+     * @return bulk reponse object containing a list of successfully deleted workflows
+     */
+    @DeleteMapping("/remove")
+    public BulkResponse deleteWorkflow(
+            @RequestBody List<String> workflowIds,
+            @RequestParam(value = "archiveWorkflow", defaultValue = "true", required = false)
+                    boolean archiveWorkflow) {
+        return workflowBulkService.deleteWorkflow(workflowIds, archiveWorkflow);
+    }
+
+    /**
+     * Terminate then delete the list of workflows.
+     *
+     * @param workflowIds - list of workflow Ids to be deleted
+     * @return bulk response object containing a list of successfully deleted workflows
+     */
+    @DeleteMapping("/terminate-remove")
+    public BulkResponse terminateRemove(
+            @RequestBody List<String> workflowIds,
+            @RequestParam(value = "archiveWorkflow", defaultValue = "true", required = false)
+                    boolean archiveWorkflow,
+            @RequestParam(value = "reason", required = false) String reason) {
+        return workflowBulkService.terminateRemove(workflowIds, reason, archiveWorkflow);
     }
 }

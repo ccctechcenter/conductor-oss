@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Netflix, Inc.
+ * Copyright 2022 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -18,7 +18,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.netflix.conductor.common.metadata.tasks.TaskType;
@@ -42,7 +41,6 @@ public class SwitchTaskMapper implements TaskMapper {
 
     private final Map<String, Evaluator> evaluators;
 
-    @Autowired
     public SwitchTaskMapper(Map<String, Evaluator> evaluators) {
         this.evaluators = evaluators;
     }

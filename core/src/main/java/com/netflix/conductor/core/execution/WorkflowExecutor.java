@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Netflix, Inc.
+ * Copyright 2022 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -336,6 +336,18 @@ public class WorkflowExecutor {
         for (TaskModel task : workflow.getTasks()) {
             switch (task.getStatus()) {
                 case FAILED:
+                    if (task.getTaskType().equalsIgnoreCase(TaskType.JOIN.toString())
+                            || task.getTaskType()
+                                    .equalsIgnoreCase(TaskType.EXCLUSIVE_JOIN.toString())) {
+                        @SuppressWarnings("unchecked")
+                        List<String> joinOn = (List<String>) task.getInputData().get("joinOn");
+                        boolean joinOnFailedPermissive = isJoinOnFailedPermissive(joinOn, workflow);
+                        if (joinOnFailedPermissive) {
+                            task.setStatus(IN_PROGRESS);
+                            addTaskToQueue(task);
+                            break;
+                        }
+                    }
                 case FAILED_WITH_TERMINAL_ERROR:
                 case TIMED_OUT:
                     retriableMap.put(task.getReferenceTaskName(), task);
@@ -1191,6 +1203,15 @@ public class WorkflowExecutor {
             if (!task.getStatus().isTerminal()) {
                 // Cancel the ones which are not completed yet....
                 task.setStatus(CANCELED);
+                try {
+                    notifyTaskStatusListener(task);
+                } catch (Exception e) {
+                    String errorMsg =
+                            String.format(
+                                    "Error while notifying TaskStatusListener: %s for workflow: %s",
+                                    task.getTaskId(), task.getWorkflowInstanceId());
+                    LOGGER.error(errorMsg, e);
+                }
                 if (systemTaskRegistry.isSystemTask(task.getTaskType())) {
                     WorkflowSystemTask workflowSystemTask =
                             systemTaskRegistry.get(task.getTaskType());
@@ -1813,5 +1834,15 @@ public class WorkflowExecutor {
         }
 
         LOGGER.info("Pushed workflow {} to {} for expedited evaluation", workflowId, DECIDER_QUEUE);
+    }
+
+    private static boolean isJoinOnFailedPermissive(List<String> joinOn, WorkflowModel workflow) {
+        return joinOn.stream()
+                .map(workflow::getTaskByRefName)
+                .anyMatch(
+                        t ->
+                                t.getWorkflowTask().isPermissive()
+                                        && !t.getWorkflowTask().isOptional()
+                                        && t.getStatus().equals(FAILED));
     }
 }

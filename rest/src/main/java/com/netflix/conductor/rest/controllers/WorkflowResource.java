@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Netflix, Inc.
+ * Copyright 2020 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -205,6 +205,16 @@ public class WorkflowResource {
             @PathVariable("workflowId") String workflowId,
             @RequestParam(value = "reason", required = false) String reason) {
         workflowService.terminateWorkflow(workflowId, reason);
+    }
+
+    @DeleteMapping("/{workflowId}/terminate-remove")
+    @Operation(summary = "Terminate workflow execution and remove the workflow from the system")
+    public void terminateRemove(
+            @PathVariable("workflowId") String workflowId,
+            @RequestParam(value = "reason", required = false) String reason,
+            @RequestParam(value = "archiveWorkflow", defaultValue = "true", required = false)
+                    boolean archiveWorkflow) {
+        workflowService.terminateRemove(workflowId, reason, archiveWorkflow);
     }
 
     @Operation(

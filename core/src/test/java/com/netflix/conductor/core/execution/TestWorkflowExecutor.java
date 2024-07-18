@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Netflix, Inc.
+ * Copyright 2022 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -178,7 +178,11 @@ public class TestWorkflowExecutor {
         taskMappers.put(
                 FORK_JOIN_DYNAMIC.name(),
                 new ForkJoinDynamicTaskMapper(
-                        idGenerator, parametersUtils, objectMapper, metadataDAO));
+                        idGenerator,
+                        parametersUtils,
+                        objectMapper,
+                        metadataDAO,
+                        mock(SystemTaskRegistry.class)));
         taskMappers.put(
                 USER_DEFINED.name(), new UserDefinedTaskMapper(parametersUtils, metadataDAO));
         taskMappers.put(SIMPLE.name(), new SimpleTaskMapper(parametersUtils));

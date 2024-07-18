@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Netflix, Inc.
+ * Copyright 2021 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -163,7 +163,7 @@ public class LocalServerRunner {
                         + serverFile;
         LOGGER.info("Running command {}", command);
 
-        serverProcess = Runtime.getRuntime().exec(command);
+        serverProcess = Runtime.getRuntime().exec(new String[] {"bash", "-l", "-c", command});
         BufferedReader error =
                 new BufferedReader(new InputStreamReader(serverProcess.getErrorStream()));
         BufferedReader op =

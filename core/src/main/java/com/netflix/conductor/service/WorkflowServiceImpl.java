@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Netflix, Inc.
+ * Copyright 2022 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -193,6 +193,19 @@ public class WorkflowServiceImpl implements WorkflowService {
      * @param archiveWorkflow Archives the workflow and associated tasks instead of removing them.
      */
     public void deleteWorkflow(String workflowId, boolean archiveWorkflow) {
+        executionService.removeWorkflow(workflowId, archiveWorkflow);
+    }
+
+    /**
+     * Terminate workflow execution, and then remove it from the system. Acts as terminate and
+     * remove combined.
+     *
+     * @param workflowId WorkflowId of the workflow
+     * @param reason Reason for terminating the workflow.
+     * @param archiveWorkflow Archives the workflow and associated tasks instead of removing them.
+     */
+    public void terminateRemove(String workflowId, String reason, boolean archiveWorkflow) {
+        workflowExecutor.terminateWorkflow(workflowId, reason);
         executionService.removeWorkflow(workflowId, archiveWorkflow);
     }
 

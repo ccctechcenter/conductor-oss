@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Netflix, Inc.
+ * Copyright 2022 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -145,11 +145,6 @@ public class SubWorkflow extends WorkflowSystemTask {
                         : "Parent workflow has been terminated with reason: "
                                 + workflow.getReasonForIncompletion();
         workflowExecutor.terminateWorkflow(subWorkflow, reason, null);
-    }
-
-    @Override
-    public boolean isAsync() {
-        return true;
     }
 
     /**

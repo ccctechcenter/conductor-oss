@@ -1,24 +1,7 @@
-![Conductor](docs/docs/img/logo.png)
+![Conductor](docs/img/logo.svg)
 
-## Announcement
-
-> Effective **December 13, 2023**, Netflix will discontinue maintenance of Conductor OSS on GitHub. This strategic decision, while difficult, is essential for realigning our resources to better serve our business objectives with our internal Conductor fork.
-> 
-> We are *deeply grateful* for your support and contributions over the years. While Netflix will no longer be maintaining this repo, members of the Conductor community have been active in promoting alternative forks of this project, we’ll leave the code as is and trust that the health of the community will remain strong and continue to develop moving forward.
-
-
-# Conductor
-[![NetflixOSS Lifecycle](https://img.shields.io/osslifecycle/Netflix/conductor.svg)]()
-[![Github release](https://img.shields.io/github/v/release/Netflix/conductor.svg)](https://GitHub.com/Netflix/conductor/releases)
-[![License](https://img.shields.io/github/license/Netflix/conductor.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-
-[![GitHub stars](https://img.shields.io/github/stars/Netflix/conductor.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Netflix/conductor/stargazers/)
-[![GitHub forks](https://img.shields.io/github/forks/Netflix/conductor.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/Netflix/conductor/network/)
-
-Conductor is a platform created by Netflix to orchestrate workflows that span across microservices.
-
-## Releases
-The final release is [![Github release](https://img.shields.io/github/v/release/Netflix/conductor.svg)](https://GitHub.com/Netflix/conductor/releases)
+[![Github release](https://img.shields.io/github/v/release/conductor-oss/conductor.svg)](https://GitHub.com/Netflix/conductor-oss/releases)
+[![License](https://img.shields.io/github/license/conductor-oss/conductor.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Workflow Creation in Code
 Conductor supports creating workflows using JSON and Code.  
@@ -63,37 +46,80 @@ Binaries are available from the [Maven Central Repository](https://search.maven.
 | conductor-grpc-client           | gRPC client to interact with the gRPC server                                                    |
 | conductor-grpc-server           | gRPC server Application                                                                         |
 | conductor-test-harness          | Integration and regression tests                                                                |
+Conductor is a platform _originally_ created at Netflix to orchestrate microservices and events.
+Conductor OSS is maintained by the team of developers at [Orkes](https://orkes.io/) along with the members of the open source community.
+
+The latest version is [![Github release](https://img.shields.io/github/v/release/conductor-oss/conductor.svg)](https://GitHub.com/conductor-oss/conductor/releases)
+## Conductor OSS
+This is the new home for the Conductor open source going forward (previously hosted at Netflix/Conductor).
+
+_The last published version of Netflix Conductor will be **3.15.0** which we will continue to support._
+
+If you would like to participate in the roadmap and development, [please reach out](https://forms.gle/P2i1xHrxPQLrjzTB7).
+
+## ⭐ This repository
+Show support for the Conductor OSS.  Please help spread the awareness by starring this repo.
+
+[![GitHub stars](https://img.shields.io/github/stars/conductor-oss/conductor.svg?style=social&label=Star&maxAge=)](https://GitHub.com/conductor-oss/conductor/)
+
+## Getting Started
+
+### Using Docker (Recommended)
+Follow the steps below to launch the docker container:
+
+```shell
+docker compose -f docker/docker-compose.yaml up
+```
+* Navigate to http://localhost:5000 once the container starts to launch UI.
+* APIs are accessible at http://localhost:8080
+* Swagger Docs:http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/
 
 ## Database Requirements
 
 * The default persistence used is Redis
-* The indexing backend is [Elasticsearch](https://www.elastic.co/) (6.x)
+* The indexing backend is [Elasticsearch](https://www.elastic.co/) (7.x)
+
+## Configuration for various database backends
+
+| Backend        | Configuration                                                                         |
+|----------------|---------------------------------------------------------------------------------------|
+| Redis + ES7    | [config-redis.properties](docker/server/config/config-redis.properties)               |
+| Postgres       | [config-postgres.properties](docker/server/config/config-postgres.properties)         |
+| Postgres + ES7 | [config-postgres-es7.properties](docker/server/config/config-postgres-es7.properties) |
+| MySQL + ES7    | [config-mysql.properties](docker/server/config/config-mysql.properties)               |
 
 ## Other Requirements
 * JDK 17+
-* UI requires Node 14 to build. Earlier Node versions may work but is untested.
+* UI requires Node 14 to build. Earlier Node versions may work but are untested.
+
+###  Building From Source
+If you wish to build your own distribution, you can run ```./gradlew build``` from this project that products the runtime artifacts.
+The runnable server is in server/ module.
+
+## Conductor OSS Roadmap
+[See the roadmap for the Conductor](ROADMAP.md)
+
+## Resources
+#### [Slack Community](https://join.slack.com/t/orkes-conductor/shared_invite/zt-2hmxn0i3n-_W~a9rWMbvMoYmlJo3Y15g)
+We have an active [community](https://join.slack.com/t/orkes-conductor/shared_invite/zt-2hmxn0i3n-_W~a9rWMbvMoYmlJo3Y15g) of Conductor users and contributors on the channel.
+#### [Documentation Site](https://docs.conductor-oss.org/)
+[Documentation](https://docs.conductor-oss.org/) and tutorial on how to use Conductor
+
+[Discussion Forum](https://github.com/conductor-oss/conductor/discussions): Please use the forum for questions and discussing ideas and join the community.
+
+### Conductor SDKs
+Conductor supports creating workflows using JSON and Code.  
+SDK support for creating workflows using code is available in multiple languages and can be found at https://github.com/conductor-sdk
+
+
+
 
 ## Get Support
 There are several ways to get in touch with us:
 * [Slack Community](https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg)
-* [GitHub Discussion Forum](https://github.com/Netflix/conductor/discussions)
 
-## Contributions
-Whether it is a small documentation correction, bug fix or a new feature, contributions are highly appreciated. We just ask you to follow standard OSS guidelines. The [Discussion Forum](https://github.com/Netflix/conductor/discussions) is a good place to ask questions, discuss new features and explore ideas. Please check with us before spending too much time, only to find out later that someone else is already working on a similar feature.
+## Contributors
 
-`main` branch is the current working branch. Please send your PR's to `main` branch, making sure that it builds on your local system successfully. Also, please make sure all the conflicts are resolved.
-
-## License
-Copyright 2022 Netflix, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+<a href="https://github.com/conductor-oss/conductor/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=conductor-oss/conductor" />
+</a>

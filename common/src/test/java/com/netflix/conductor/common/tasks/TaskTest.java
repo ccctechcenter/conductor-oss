@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Netflix, Inc.
+ * Copyright 2020 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -98,7 +98,7 @@ public class TaskTest {
         final Task task = new Task();
         // In order to avoid forgetting putting inside the copy method the newly added fields check
         // the number of declared fields.
-        final int expectedTaskFieldsNumber = 40;
+        final int expectedTaskFieldsNumber = 41;
         final int declaredFieldsNumber = task.getClass().getDeclaredFields().length;
 
         assertEquals(expectedTaskFieldsNumber, declaredFieldsNumber);

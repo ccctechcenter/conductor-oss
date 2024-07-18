@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Netflix, Inc.
+ * Copyright 2022 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,6 +14,7 @@ package com.netflix.conductor.core.execution.tasks;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.script.ScriptException;
 
@@ -110,6 +111,17 @@ public class DoWhile extends WorkflowSystemTask {
             }
         }
         doWhileTaskModel.addOutput(String.valueOf(doWhileTaskModel.getIteration()), output);
+
+        Optional<Integer> keepLastN =
+                Optional.ofNullable(doWhileTaskModel.getWorkflowTask().getInputParameters())
+                        .map(parameters -> parameters.get("keepLastN"))
+                        .map(value -> (Integer) value);
+        if (keepLastN.isPresent() && doWhileTaskModel.getIteration() > keepLastN.get()) {
+            Integer iteration = doWhileTaskModel.getIteration();
+            IntStream.range(0, iteration - keepLastN.get() - 1)
+                    .mapToObj(Integer::toString)
+                    .forEach(doWhileTaskModel::removeOutput);
+        }
 
         if (hasFailures) {
             LOGGER.debug(

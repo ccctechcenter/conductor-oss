@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Netflix, Inc.
+ * Copyright 2021 Conductor Authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -81,6 +81,18 @@ public class TaskResource {
     @Operation(summary = "Update a task")
     public String updateTask(@RequestBody TaskResult taskResult) {
         return taskService.updateTask(taskResult);
+    }
+
+    @PostMapping(value = "/{workflowId}/{taskRefName}/{status}", produces = TEXT_PLAIN_VALUE)
+    @Operation(summary = "Update a task By Ref Name")
+    public String updateTask(
+            @PathVariable("workflowId") String workflowId,
+            @PathVariable("taskRefName") String taskRefName,
+            @PathVariable("status") TaskResult.Status status,
+            @RequestParam(value = "workerid", required = false) String workerId,
+            @RequestBody Map<String, Object> output) {
+
+        return taskService.updateTask(workflowId, taskRefName, status, workerId, output);
     }
 
     @PostMapping("/{taskId}/log")
