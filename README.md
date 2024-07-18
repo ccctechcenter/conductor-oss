@@ -3,49 +3,7 @@
 [![Github release](https://img.shields.io/github/v/release/conductor-oss/conductor.svg)](https://GitHub.com/Netflix/conductor-oss/releases)
 [![License](https://img.shields.io/github/license/conductor-oss/conductor.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-## Workflow Creation in Code
-Conductor supports creating workflows using JSON and Code.  
-SDK support for creating workflows using code is available in multiple languages and can be found at https://github.com/conductor-sdk
 
-## Community Contributions
-The modules contributed by the community are housed at [conductor-community](https://github.com/Netflix/conductor-community). Compatible versions of the community modules are released simultaneously with releases of the main modules.
-
-[Discussion Forum](https://github.com/Netflix/conductor/discussions): Please use the forum for questions and discussing ideas and join the community.
-
-[List of Conductor community projects](/docs/docs/resources/related.md): Backup tool, Cron like workflow starter, Docker containers and more.
-
-## Getting Started - Building & Running Conductor
-###  Using Docker:
-The easiest way to get started is with Docker containers. Please follow the instructions [here](https://conductor.netflix.com/devguide/running/docker.html). 
-
-###  From Source:
-Conductor Server is a [Spring Boot](https://spring.io/projects/spring-boot) project and follows all applicable conventions. See instructions [here](https://conductor.netflix.com/devguide/running/source.html).
-
-## Published Artifacts
-Binaries are available from the [Maven Central Repository](https://search.maven.org/search?q=g:com.netflix.conductor).
-
-| Artifact                        | Description                                                                                     |
-|---------------------------------|-------------------------------------------------------------------------------------------------|
-| conductor-common                | Common models used by various conductor modules                                                 |
-| conductor-core                  | Core Conductor module                                                                           |
-| conductor-redis-persistence     | Persistence and queue using Redis/Dynomite                                                      |
-| conductor-cassandra-persistence | Persistence using Cassandra                                                                     |
-| conductor-es6-persistence       | Indexing using Elasticsearch 6.X                                                                |
-| conductor-rest                  | Spring MVC resources for the core services                                                      |
-| conductor-ui                    | node.js based UI for Conductor                                                                  |
-| conductor-client                | Java client for Conductor that includes helpers for running worker tasks                        |
-| conductor-client-spring         | Client starter kit for Spring                                                                   |
-| conductor-java-sdk              | SDK for writing workflows in code                                                               |
-| conductor-server                | Spring Boot Web Application                                                                     |
-| conductor-redis-lock            | Workflow execution lock implementation using Redis                                              |
-| conductor-awss3-storage         | External payload storage implementation using AWS S3                                            |
-| conductor-awssqs-event-queue    | Event queue implementation using AWS SQS                                                        |
-| conductor-http-task             | Workflow system task implementation to send make requests                                       |
-| conductor-json-jq-task          | Workflow system task implementation to evaluate JSON using [jq](https://stedolan.github.io/jq/) |
-| conductor-grpc                  | Protobuf models used by the server and client                                                   |
-| conductor-grpc-client           | gRPC client to interact with the gRPC server                                                    |
-| conductor-grpc-server           | gRPC server Application                                                                         |
-| conductor-test-harness          | Integration and regression tests                                                                |
 Conductor is a platform _originally_ created at Netflix to orchestrate microservices and events.
 Conductor OSS is maintained by the team of developers at [Orkes](https://orkes.io/) along with the members of the open source community.
 
