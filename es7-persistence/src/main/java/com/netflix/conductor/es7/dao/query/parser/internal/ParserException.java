@@ -1,5 +1,9 @@
 /*
+<<<<<<<< HEAD:es7-persistence/src/main/java/com/netflix/conductor/es7/dao/query/parser/internal/ParserException.java
  * Copyright 2023 Conductor Authors.
+========
+ * Copyright 2022 Conductor Authors.
+>>>>>>>> daba08be3 (Squashed commit of the following:):core/src/main/java/com/netflix/conductor/core/event/WorkflowCreationEvent.java
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
